@@ -1,0 +1,23 @@
+import { PortfolioProvider } from "@/context/PortfolioContext";
+import Scene from "@/components/3d/Scene";
+import Navbar from "@/components/Navbar";
+import "./globals.css";
+
+export const metadata = {
+  title: "Anas Ahmed | Full Stack Developer",
+  description: "Full Stack, AI, and App Developer with 11+ years of experience",
+};
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en" className="h-full">
+      <body className="h-full bg-slate-950 text-white antialiased">
+        <PortfolioProvider>
+          <Scene />
+          <Navbar />
+          <main className="relative z-10">{children}</main>
+        </PortfolioProvider>
+      </body>
+    </html>
+  );
+}
