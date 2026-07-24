@@ -28,9 +28,9 @@ export default function ProjectCard({ project }: { project: Project }) {
           </span>
           <h3 className="text-lg font-bold text-white mt-3 mb-2">{project.title}</h3>
           <p className="text-sm text-slate-400 mb-4">{project.description}</p>
-          <span className="inline-flex items-center gap-1 text-sm text-indigo-400 group-hover:text-indigo-300 transition-colors font-mono">
+          {/* <span className="inline-flex items-center gap-1 text-sm text-indigo-400 group-hover:text-indigo-300 transition-colors font-mono">
             View Details <ExternalLink className="w-3 h-3" />
-          </span>
+          </span> */}
         </div>
       </Link>
     </motion.div>

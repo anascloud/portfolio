@@ -1,5 +1,5 @@
 import { PortfolioProvider } from "@/context/PortfolioContext";
-import Scene from "@/components/3d/Scene";
+import VideoBackground from "@/components/VideoBackground";
 import Navbar from "@/components/Navbar";
 import { Providers } from "./providers";
 import "./globals.css";
@@ -17,7 +17,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body className="h-full bg-slate-950 text-white antialiased">
         <Providers>
           <PortfolioProvider>
-            <Scene />
+            <VideoBackground />
             <Navbar />
             <main className="relative z-10">{children}</main>
           </PortfolioProvider>
