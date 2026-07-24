@@ -1,6 +1,7 @@
 import { PortfolioProvider } from "@/context/PortfolioContext";
 import Scene from "@/components/3d/Scene";
 import Navbar from "@/components/Navbar";
+import { Providers } from "./providers";
 import "./globals.css";
 import type { Metadata } from "next";
 import { ReactNode } from "react";
@@ -14,11 +15,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className="h-full">
       <body className="h-full bg-slate-950 text-white antialiased">
-        <PortfolioProvider>
-          <Scene />
-          <Navbar />
-          <main className="relative z-10">{children}</main>
-        </PortfolioProvider>
+        <Providers>
+          <PortfolioProvider>
+            <Scene />
+            <Navbar />
+            <main className="relative z-10">{children}</main>
+          </PortfolioProvider>
+        </Providers>
       </body>
     </html>
   );

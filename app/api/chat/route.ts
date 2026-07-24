@@ -1,21 +1,27 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import Groq from "groq-sdk";
+
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 export async function POST(req: NextRequest) {
-  const { messages } = await req.json();
-  const userMessage = messages[messages.length - 1].content.toLowerCase();
+  try {
+    const { messages } = await req.json();
 
-  let aiResponse = "I am Anas's AI Assistant. How can I help you with his portfolio?";
+    if (!messages || !Array.isArray(messages)) {
+      return NextResponse.json({ reply: "Invalid request" }, { status: 400 });
+    }
 
-  if (userMessage.includes("experience") || userMessage.includes("years")) {
-    aiResponse = "Anas has 11 years of experience as a Full Stack, AI, and App Developer.";
-  } else if (userMessage.includes("projects") || userMessage.includes("work")) {
-    aiResponse = "Anas has built numerous ERP systems, Ecommerce platforms, and AI applications. You can filter them in the Projects section below!";
-  } else if (userMessage.includes("contact") || userMessage.includes("email")) {
-    aiResponse = "You can reach Anas at anasbinsabiet@gmail.com or call +8801793478194.";
-  } else if (userMessage.includes("cv") || userMessage.includes("resume")) {
-    aiResponse = "You can view and download Anas's CV from the 'Download My CV' button in the navigation bar.";
+    const completion = await groq.chat.completions.create({
+      model: "mixtral-8x7b-32768",
+      messages,
+    });
+
+    const reply = completion.choices[0]?.message?.content || "";
+
+    return NextResponse.json({ reply });
+  } catch (error) {
+    console.error("Groq API error:", error);
+    return NextResponse.json({ reply: "Sorry, I couldn't process that. Please try again." });
   }
-
-  return NextResponse.json({ reply: aiResponse });
 }

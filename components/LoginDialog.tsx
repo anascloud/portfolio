@@ -8,11 +8,14 @@ export default function LoginDialog() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError("");
-    const success = login(email, password);
+    setLoading(true);
+    const success = await login(email, password);
+    setLoading(false);
     if (!success) {
       setError("Invalid email or password");
     }
@@ -52,8 +55,8 @@ export default function LoginDialog() {
             />
           </div>
           {error && <p className="text-red-400 text-sm font-mono">{error}</p>}
-          <button type="submit" className="w-full bg-indigo-600 py-3 rounded font-bold hover:bg-indigo-500 transition">
-            Login
+          <button type="submit" disabled={loading} className="w-full bg-indigo-600 py-3 rounded font-bold hover:bg-indigo-500 transition disabled:opacity-50">
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
       </div>

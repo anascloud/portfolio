@@ -8,6 +8,8 @@ interface Message {
   content: string;
 }
 
+const SYSTEM_PROMPT = "You are Anas's AI assistant. You help visitors learn about Anas Ahmed, a Full Stack Developer with 11+ years of experience building ERP systems, Ecommerce platforms, and AI applications. His email is anasbinsabiet@gmail.com, phone +8801793478194. He is from Dhaka, Bangladesh. You can view his projects on the portfolio site. Keep responses concise and helpful.";
+
 export default function AIChatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
@@ -25,15 +27,21 @@ export default function AIChatbot() {
     setLoading(true);
 
     try {
+      const chatMessages = [
+        { role: "system", content: SYSTEM_PROMPT },
+        ...messages,
+        userMsg,
+      ];
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: [...messages, userMsg] }),
+        body: JSON.stringify({ messages: chatMessages }),
       });
       const data = await res.json();
       setMessages((prev) => [...prev, { role: "assistant", content: data.reply }]);
     } catch (error) {
       console.error("Error fetching AI response", error);
+      setMessages((prev) => [...prev, { role: "assistant", content: "Sorry, I couldn't process that. Please try again." }]);
     }
     setLoading(false);
   };
@@ -65,10 +73,10 @@ export default function AIChatbot() {
             </div>
 
             <div className="h-80 overflow-y-auto p-4 space-y-4 text-sm">
-              {messages.map((msg, idx) => (
-                <div key={idx} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
-                  <div className={`max-w-[80%] p-3 rounded-lg ${msg.role === "user" ? "bg-indigo-600 text-white" : "bg-slate-700 text-slate-200"}`}>
-                    {msg.content}
+              {messages.map((m, idx) => (
+                <div key={idx} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
+                  <div className={`max-w-[80%] p-3 rounded-lg ${m.role === "user" ? "bg-indigo-600 text-white" : "bg-slate-700 text-slate-200"}`}>
+                    {m.content}
                   </div>
                 </div>
               ))}
