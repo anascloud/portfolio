@@ -27,7 +27,7 @@ export default function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-md border-b border-indigo-500/20">
       <div className="max-w-7xl mx-auto px-4 flex items-center justify-between">
         <Link href="/" className="text-xl font-bold text-indigo-400 font-mono">
-          {/* <Image src="/logo.png" alt="Logo" width={200} height={50} /> */}
+          <Image src="/logo.png" alt="Logo" width={200} height={50} />
         </Link>
         <div className="flex items-center gap-4 py-3">
           <div className="hidden md:flex items-center gap-3 mr-2">
@@ -60,12 +60,6 @@ export default function Navbar() {
               >
                 Dashboard
               </Link>
-              <button
-                onClick={() => setIsAddModalOpen(true)}
-                className="flex items-center gap-1 px-3 py-1.5 bg-indigo-600/20 text-indigo-400 rounded-lg text-sm font-mono hover:bg-indigo-600/30 transition-colors"
-              >
-                <Plus className="w-4 h-4" /> Add
-              </button>
             </>
           )}
 

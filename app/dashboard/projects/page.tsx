@@ -1,13 +1,14 @@
 "use client";
 import { useState } from "react";
 import { usePortfolio, Project } from "@/context/PortfolioContext";
-import { Plus, Pencil, Trash2, X, Check } from "lucide-react";
+import { Plus, Pencil, Trash2, X, Check, ExternalLink, ImageIcon } from "lucide-react";
 
 export default function DashboardProjects() {
   const { projects, addProject, updateProject, deleteProject } = usePortfolio();
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editForm, setEditForm] = useState<Partial<Project>>({});
   const [showAdd, setShowAdd] = useState(false);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
   const [addForm, setAddForm] = useState({ title: "", category: "", description: "", image: "", link: "" });
 
   const startEdit = (p: Project) => {
@@ -64,13 +65,15 @@ export default function DashboardProjects() {
               <th className="text-left p-4">Title</th>
               <th className="text-left p-4 hidden md:table-cell">Category</th>
               <th className="text-left p-4 hidden lg:table-cell">Description</th>
+              <th className="text-left p-4 hidden xl:table-cell">Image</th>
+              <th className="text-left p-4 hidden xl:table-cell">Link</th>
               <th className="text-right p-4">Actions</th>
             </tr>
           </thead>
           <tbody>
             {projects.length === 0 && (
               <tr>
-                <td colSpan={4} className="p-8 text-center text-slate-500 font-mono">No projects found.</td>
+                <td colSpan={6} className="p-8 text-center text-slate-500 font-mono">No projects found.</td>
               </tr>
             )}
             {projects.map((p) => (
@@ -80,6 +83,8 @@ export default function DashboardProjects() {
                     <td className="p-4"><input value={editForm.title || ""} onChange={(e) => setEditForm({ ...editForm, title: e.target.value })} className="bg-slate-800 p-2 rounded text-white w-full text-sm" /></td>
                     <td className="p-4 hidden md:table-cell"><input value={editForm.category || ""} onChange={(e) => setEditForm({ ...editForm, category: e.target.value })} className="bg-slate-800 p-2 rounded text-white w-full text-sm" /></td>
                     <td className="p-4 hidden lg:table-cell"><input value={editForm.description || ""} onChange={(e) => setEditForm({ ...editForm, description: e.target.value })} className="bg-slate-800 p-2 rounded text-white w-full text-sm" /></td>
+                    <td className="p-4 hidden xl:table-cell"><input value={editForm.image || ""} onChange={(e) => setEditForm({ ...editForm, image: e.target.value })} className="bg-slate-800 p-2 rounded text-white w-full text-sm" /></td>
+                    <td className="p-4 hidden xl:table-cell"><input value={editForm.link || ""} onChange={(e) => setEditForm({ ...editForm, link: e.target.value })} className="bg-slate-800 p-2 rounded text-white w-full text-sm" /></td>
                     <td className="p-4 text-right">
                       <div className="flex justify-end gap-2">
                         <button onClick={saveEdit} className="p-1.5 text-emerald-400 hover:bg-emerald-500/20 rounded"><Check className="w-4 h-4" /></button>
@@ -94,10 +99,28 @@ export default function DashboardProjects() {
                       <span className="text-xs bg-indigo-500/10 text-indigo-400 px-2 py-1 rounded-full">{p.category}</span>
                     </td>
                     <td className="p-4 text-slate-500 text-sm hidden lg:table-cell truncate max-w-xs">{p.description}</td>
+                    <td className="p-4 hidden xl:table-cell">
+                      {p.image ? (
+                        <a href={p.image} target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-indigo-400" title="View Image">
+                          <ImageIcon className="w-4 h-4" />
+                        </a>
+                      ) : (
+                        <span className="text-slate-600">—</span>
+                      )}
+                    </td>
+                    <td className="p-4 hidden xl:table-cell">
+                      {p.link ? (
+                        <a href={p.link} target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-indigo-400" title="Open Link">
+                          <ExternalLink className="w-4 h-4" />
+                        </a>
+                      ) : (
+                        <span className="text-slate-600">—</span>
+                      )}
+                    </td>
                     <td className="p-4 text-right">
                       <div className="flex justify-end gap-2">
                         <button onClick={() => startEdit(p)} className="p-1.5 text-slate-400 hover:text-indigo-400 hover:bg-indigo-500/20 rounded"><Pencil className="w-4 h-4" /></button>
-                        <button onClick={() => deleteProject(p.id)} className="p-1.5 text-slate-400 hover:text-red-400 hover:bg-red-500/20 rounded"><Trash2 className="w-4 h-4" /></button>
+                        <button onClick={() => setDeletingId(p.id)} className="p-1.5 text-slate-400 hover:text-red-400 hover:bg-red-500/20 rounded"><Trash2 className="w-4 h-4" /></button>
                       </div>
                     </td>
                   </>
@@ -107,6 +130,25 @@ export default function DashboardProjects() {
           </tbody>
         </table>
       </div>
+
+      {deletingId && (
+        <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
+          <div className="bg-slate-900 border border-red-500/30 rounded-xl p-6 w-full max-w-sm">
+            <h3 className="text-lg font-bold text-white font-mono mb-2">Delete Project</h3>
+            <p className="text-slate-400 text-sm font-mono mb-6">
+              Are you sure you want to delete this project? This action cannot be undone.
+            </p>
+            <div className="flex gap-3 justify-end">
+              <button onClick={() => setDeletingId(null)} className="px-4 py-2 bg-slate-700 rounded-lg text-sm font-mono hover:bg-slate-600 transition-colors">
+                Cancel
+              </button>
+              <button onClick={() => { deleteProject(deletingId); setDeletingId(null); }} className="px-4 py-2 bg-red-600 rounded-lg text-sm font-mono hover:bg-red-500 transition-colors">
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
