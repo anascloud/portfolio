@@ -1,13 +1,21 @@
 "use client";
-import { useState } from "react";
+import { useState, FormEvent } from "react";
 import { usePortfolio } from "@/context/PortfolioContext";
 import { X } from "lucide-react";
 
+interface ProjectForm {
+  title: string;
+  category: string;
+  description: string;
+  image: string;
+  link: string;
+}
+
 export default function AddProjectModal() {
   const { addProject, setIsAddModalOpen } = usePortfolio();
-  const [form, setForm] = useState({ title: "", category: "", description: "", image: "", link: "" });
+  const [form, setForm] = useState<ProjectForm>({ title: "", category: "", description: "", image: "", link: "" });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     addProject(form);
     setIsAddModalOpen(false);

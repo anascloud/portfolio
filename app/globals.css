@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-background: #0f0f17;
+  --color-background: #0b0b2e;
   --color-foreground: #ededed;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 body {
-  background: #0f0f17;
+  background: #0b0b2e;
   color: #ededed;
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -18,7 +18,7 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0f0f17;
+  background: #0b0b2e;
 }
 
 ::-webkit-scrollbar-thumb {

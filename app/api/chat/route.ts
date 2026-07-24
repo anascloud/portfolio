@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
-export async function POST(req) {
+export async function POST(req: NextRequest) {
   const { messages } = await req.json();
   const userMessage = messages[messages.length - 1].content.toLowerCase();
 

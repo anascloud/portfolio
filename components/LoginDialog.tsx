@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, FormEvent } from "react";
 import { usePortfolio } from "@/context/PortfolioContext";
 import { X, Lock } from "lucide-react";
 
@@ -9,7 +9,7 @@ export default function LoginDialog() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     setError("");
     const success = login(email, password);

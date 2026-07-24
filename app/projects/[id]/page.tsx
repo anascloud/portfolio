@@ -3,11 +3,12 @@ import { use, useState, useEffect } from "react";
 import Link from "next/link";
 import { usePortfolio } from "@/context/PortfolioContext";
 import { ArrowLeft, ExternalLink } from "lucide-react";
+import type { Project } from "@/context/PortfolioContext";
 
-export default function ProjectDetails({ params }) {
+export default function ProjectDetails({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   const { projects } = usePortfolio();
-  const [project, setProject] = useState(null);
+  const [project, setProject] = useState<Project | null>(null);
 
   useEffect(() => {
     const found = projects.find((p) => p.id === id);

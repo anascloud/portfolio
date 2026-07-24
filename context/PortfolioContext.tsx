@@ -1,11 +1,32 @@
 "use client";
-import { createContext, useState, useContext, useEffect } from "react";
+import { createContext, useState, useContext, useEffect, ReactNode } from "react";
 import projectsData from "@/data/projects.json";
 
-const PortfolioContext = createContext();
+export interface Project {
+  id: string;
+  title: string;
+  category: string;
+  description: string;
+  image: string;
+  link: string;
+}
 
-export const PortfolioProvider = ({ children }) => {
-  const [projects, setProjects] = useState([]);
+interface PortfolioContextType {
+  projects: Project[];
+  addProject: (project: Omit<Project, "id">) => void;
+  isAddModalOpen: boolean;
+  setIsAddModalOpen: (v: boolean) => void;
+  isLoggedIn: boolean;
+  login: (email: string, password: string) => boolean;
+  logout: () => void;
+  showLoginDialog: boolean;
+  setShowLoginDialog: (v: boolean) => void;
+}
+
+const PortfolioContext = createContext<PortfolioContextType | null>(null);
+
+export const PortfolioProvider = ({ children }: { children: ReactNode }) => {
+  const [projects, setProjects] = useState<Project[]>([]);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showLoginDialog, setShowLoginDialog] = useState(false);
@@ -15,7 +36,7 @@ export const PortfolioProvider = ({ children }) => {
     if (savedProjects) {
       setProjects(JSON.parse(savedProjects));
     } else {
-      setProjects(projectsData);
+      setProjects(projectsData as Project[]);
     }
     const loggedIn = localStorage.getItem("anas_logged_in");
     if (loggedIn === "true") {
@@ -23,7 +44,7 @@ export const PortfolioProvider = ({ children }) => {
     }
   }, []);
 
-  const login = (email, password) => {
+  const login = (email: string, password: string) => {
     if (email === "anasbinsabiet@gmail.com" && password === "anasbinsabiet@gmail.com") {
       setIsLoggedIn(true);
       localStorage.setItem("anas_logged_in", "true");
@@ -38,7 +59,7 @@ export const PortfolioProvider = ({ children }) => {
     localStorage.removeItem("anas_logged_in");
   };
 
-  const addProject = (newProject) => {
+  const addProject = (newProject: Omit<Project, "id">) => {
     const updatedProjects = [...projects, { ...newProject, id: Date.now().toString() }];
     setProjects(updatedProjects);
     localStorage.setItem("anas_projects", JSON.stringify(updatedProjects));
@@ -54,4 +75,8 @@ export const PortfolioProvider = ({ children }) => {
   );
 };
 
-export const usePortfolio = () => useContext(PortfolioContext);
+export const usePortfolio = () => {
+  const ctx = useContext(PortfolioContext);
+  if (!ctx) throw new Error("usePortfolio must be used within PortfolioProvider");
+  return ctx;
+};

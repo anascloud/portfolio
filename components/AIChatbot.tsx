@@ -1,20 +1,25 @@
 "use client";
-import { useState } from "react";
+import { useState, FormEvent } from "react";
 import { MessageSquare, X, Send } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
+interface Message {
+  role: "user" | "assistant";
+  content: string;
+}
+
 export default function AIChatbot() {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState([
+  const [messages, setMessages] = useState<Message[]>([
     { role: "assistant", content: "Hi! I'm Anas's AI Assistant. Ask me about his experience, projects, or how to contact him!" }
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const sendMessage = async (e) => {
+  const sendMessage = async (e: FormEvent) => {
     e.preventDefault();
     if (!input) return;
-    const userMsg = { role: "user", content: input };
+    const userMsg: Message = { role: "user", content: input };
     setMessages((prev) => [...prev, userMsg]);
     setInput("");
     setLoading(true);
