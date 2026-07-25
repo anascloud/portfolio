@@ -31,7 +31,7 @@ export default function Home() {
   const filteredProjects = filter === "All" ? projects : projects.filter((p) => p.category === filter);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-slate-900/50">
       <section id="projects" className="py-20 px-4 max-w-7xl mx-auto">
         <h2 className="text-4xl font-bold mb-10 text-center text-slate-100 font-mono mt-4">
           &lt; Projects /&gt;

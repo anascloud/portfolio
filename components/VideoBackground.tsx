@@ -20,7 +20,7 @@ export default function VideoBackground() {
         playsInline
         className="w-full h-full object-cover"
       >
-        <source src="https://cdn.pixabay.com/video/2024/06/07/215694_large.mp4" type="video/mp4" />
+        <source src="/bg.mp4" type="video/mp4" />
       </video>
       <div className="absolute inset-0 bg-black/60" />
       <div className="absolute inset-0 bg-gradient-to-b from-slate-950/40 via-transparent to-slate-950/40" />

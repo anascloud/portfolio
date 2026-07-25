@@ -24,7 +24,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 pt-16">
+    <div className="min-h-screen bg-slate-900/50 pt-16">
       <div className="max-w-7xl mx-auto flex">
         <aside className="w-64 shrink-0 border-r border-slate-800 min-h-[calc(100vh-4rem)] p-6 hidden md:block">
           <h2 className="text-lg font-bold text-indigo-400 font-mono mb-6">Dashboard</h2>
