@@ -1,10 +1,8 @@
 "use client";
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { usePortfolio } from "@/context/PortfolioContext";
 import ProjectCard from "@/components/ProjectCard";
 import AIChatbot from "@/components/AIChatbot";
-import AddProjectModal from "@/components/AddProjectModal";
 import LoginDialog from "@/components/LoginDialog";
 
 function GithubIcon({ className }: { className?: string }) {
@@ -24,7 +22,7 @@ function LinkedinIcon({ className }: { className?: string }) {
 }
 
 export default function Home() {
-  const { projects, isAddModalOpen, showLoginDialog } = usePortfolio();
+  const { projects, showLoginDialog } = usePortfolio();
   const [filter, setFilter] = useState("All");
 
   const categories = ["All", ...new Set(projects.map((p) => p.category))];
@@ -63,7 +61,6 @@ export default function Home() {
       </section>
 
       <AIChatbot />
-      {isAddModalOpen && <AddProjectModal />}
       {showLoginDialog && <LoginDialog />}
     </div>
   );
