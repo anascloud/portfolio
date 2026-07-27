@@ -21,7 +21,7 @@ function LinkedinIcon({ className }: { className?: string }) {
 }
 
 export default function Navbar() {
-  const { setIsAddModalOpen, isLoggedIn, logout, setShowLoginDialog } = usePortfolio();
+  const { isLoggedIn, logout, setShowLoginDialog } = usePortfolio();
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-md border-b border-indigo-500/20">
@@ -34,7 +34,7 @@ export default function Navbar() {
             <a href="mailto:anasbinsabiet@gmail.com" className="text-slate-400 hover:text-indigo-400 transition-colors" title="Email">
               <Mail className="w-4 h-4" />
             </a>
-            <a href="https://github.com/anasbinsabiet" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-indigo-400 transition-colors" title="GitHub">
+            <a href="https://github.com/anascloud" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-indigo-400 transition-colors" title="GitHub">
               <GithubIcon className="w-4 h-4" />
             </a>
             <a href="https://linkedin.com/in/anasbinsabiet" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-indigo-400 transition-colors" title="LinkedIn">
@@ -64,7 +64,7 @@ export default function Navbar() {
           )}
 
           <a
-            href="#"
+            href="https://drive.usercontent.google.com/u/0/uc?id=1BhbYM-Ks8ymNJlJnt7xoLY46zVbxmcPg&export=download"
             className="hidden md:flex items-center gap-1 px-4 py-1.5 bg-indigo-600 text-white rounded-full text-sm font-mono hover:bg-indigo-500 transition-colors"
           >
             <Download className="w-4 h-4" /> Download My CV
