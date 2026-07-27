@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePortfolio } from "@/context/PortfolioContext";
-import { Download, Plus, LogIn, LogOut, Mail, Globe } from "lucide-react";
+import { Download, LogIn, LogOut, Mail, Globe } from "lucide-react";
 
 function GithubIcon({ className }: { className?: string }) {
   return (
@@ -67,7 +67,7 @@ export default function Navbar() {
             href="https://drive.usercontent.google.com/u/0/uc?id=1BhbYM-Ks8ymNJlJnt7xoLY46zVbxmcPg&export=download"
             className="hidden md:flex items-center gap-1 px-4 py-1.5 bg-indigo-600 text-white rounded-full text-sm font-mono hover:bg-indigo-500 transition-colors"
           >
-            <Download className="w-4 h-4" /> Download My CV
+            <Download className="w-4 h-4" />Download My CV
           </a>
 
           {isLoggedIn ? (
